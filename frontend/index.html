@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResumeLens — AI Resume Screener</title>
+  <meta name="description" content="Semantic resume-to-job-description matching powered by NLP. Get your match score, missing skills, and improvement tips in seconds." />
+
+  <!-- Fonts: Fraunces (display) + Inter Tight (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+
+  <!-- ──────────── NAV ──────────── -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="28" height="28" rx="8" fill="url(#bg)"/>
+            <circle cx="14" cy="14" r="6" stroke="white" stroke-width="2.2" fill="none"/>
+            <line x1="18.5" y1="18.5" x2="23" y2="23" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="14" cy="14" r="2.2" fill="white"/>
+            <defs>
+              <linearGradient id="bg" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#1e3a8a"/>
+                <stop offset="1" stop-color="#0c4a6e"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">ResumeLens</span>
+          <span class="brand-sub">Resume Intelligence</span>
+        </span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#analyzer">Analyzer</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ──────────── HERO ──────────── -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Powered by sentence-transformers
+      </div>
+      <h1 class="hero-title">
+        Know if your resume <em>actually</em><br/>matches the job.
+      </h1>
+      <p class="hero-sub">
+        Upload your resume and paste any job description. Get a semantic match score,
+        a precise list of missing skills, and concrete suggestions to improve — in seconds.
+      </p>
+      <div class="hero-cta">
+        <a href="#analyzer" class="btn btn-primary">Try the Analyzer →</a>
+        <a href="#how" class="btn btn-ghost">How it works</a>
+      </div>
+
+      <div class="hero-stats" id="heroStats">
+        <div class="stat">
+          <span class="stat-num" data-target="384" data-suffix="-dim">0-dim</span>
+          <span class="stat-label">Semantic embeddings</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="1.5" data-prefix="~" data-suffix="s" data-decimals="1">~0s</span>
+          <span class="stat-label">Average analysis time</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="100" data-suffix="%">0%</span>
+          <span class="stat-label">Local & private</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────── HOW IT WORKS ──────────── -->
+  <section id="how" class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="eyebrow">The process</span>
+        <h2 class="section-title">Three steps. No guesswork.</h2>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <span class="step-num">01</span>
+          <h3>Upload your resume</h3>
+          <p>We extract text directly from your PDF — nothing is stored, nothing leaves your machine.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">02</span>
+          <h3>Paste the job description</h3>
+          <p>Any role, any company. The full description gives the model the most context to score against.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">03</span>
+          <h3>Get a precise match score</h3>
+          <p>Semantic similarity via cosine distance, plus a keyword gap analysis you can act on today.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────── ANALYZER ──────────── -->
+  <section id="analyzer" class="section section-dim">
+    <div class="section-inner">
+      <div class="section-header centered">
+        <span class="eyebrow">The analyzer</span>
+        <h2 class="section-title">Run your match</h2>
+        <p class="section-sub">Two inputs. One score. Real feedback.</p>
+      </div>
+
+      <div class="analyzer">
+        <!-- Inputs -->
+        <div class="card input-card">
+          <div class="input-grid">
+
+            <!-- Upload -->
+            <div class="input-block">
+              <label class="input-label">
+                <span class="input-num">1</span>
+                Upload Resume
+                <span class="input-hint">PDF only, text-based</span>
+              </label>
+              <label class="dropzone" id="dropzone">
+                <input type="file" id="resumeInput" accept="application/pdf" hidden />
+                <div class="dropzone-content" id="dropzoneEmpty">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="dropzone-icon">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  <span class="dropzone-title">Drop your resume here</span>
+                  <span class="dropzone-sub">or click to browse</span>
+                </div>
+                <div class="dropzone-content dropzone-filled" id="dropzoneFilled" hidden>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="dropzone-icon dropzone-icon-success">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <polyline points="9 15 11 17 15 13"/>
+                  </svg>
+                  <span class="dropzone-title" id="fileName">resume.pdf</span>
+                  <span class="dropzone-sub" id="fileSize">— KB</span>
+                  <button type="button" class="link-btn" id="clearFile">Remove</button>
+                </div>
+              </label>
+            </div>
+
+            <!-- JD -->
+            <div class="input-block">
+              <label class="input-label" for="jdInput">
+                <span class="input-num">2</span>
+                Job Description
+                <span class="input-hint">Paste the full posting</span>
+              </label>
+              <textarea id="jdInput" class="textarea" rows="10" placeholder="Paste the complete job description here…&#10;&#10;Include responsibilities, required skills, qualifications, and tech stack for the most accurate score."></textarea>
+              <div class="textarea-meta">
+                <span id="jdCharCount">0 characters</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-action">
+            <button class="btn btn-primary btn-lg" id="analyzeBtn">
+              <span class="btn-label">Analyze Match</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <span class="btn-spinner" hidden></span>
+            </button>
+            <p class="input-disclaimer">First run downloads the model (~80MB). After that, results in ~1–2 seconds.</p>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results" id="results" hidden>
+          <!-- Score Card -->
+          <div class="card score-card">
+            <div class="score-visual">
+              <svg class="gauge" viewBox="0 0 200 200">
+                <circle class="gauge-track" cx="100" cy="100" r="84" />
+                <circle class="gauge-fill" id="gaugeFill" cx="100" cy="100" r="84"
+                        stroke-dasharray="527.788" stroke-dashoffset="527.788"
+                        transform="rotate(-90 100 100)" />
+              </svg>
+              <div class="gauge-center">
+                <span class="gauge-num" id="scoreNum">0</span>
+                <span class="gauge-pct">%</span>
+              </div>
+            </div>
+            <div class="score-info">
+              <span class="eyebrow">Match Score</span>
+              <h3 class="score-label" id="scoreLabel">—</h3>
+              <p class="score-desc" id="scoreDesc">Your resume's semantic similarity to the job description, computed via cosine distance over MiniLM embeddings.</p>
+            </div>
+          </div>
+
+          <!-- Skills Grid -->
+          <div class="skills-grid">
+            <div class="card skill-card">
+              <div class="card-header">
+                <h4 class="card-title">
+                  <span class="dot dot-amber"></span>
+                  Missing Keywords
+                </h4>
+                <span class="card-meta" id="missingCount">0</span>
+              </div>
+              <p class="card-sub">Terms in the job description that don't appear in your resume.</p>
+              <div class="chips" id="missingChips"></div>
+            </div>
+
+            <div class="card skill-card">
+              <div class="card-header">
+                <h4 class="card-title">
+                  <span class="dot dot-green"></span>
+                  Matched Keywords
+                </h4>
+                <span class="card-meta" id="matchedCount">0</span>
+              </div>
+              <p class="card-sub">Terms from the job description already present in your resume.</p>
+              <div class="chips" id="matchedChips"></div>
+            </div>
+          </div>
+
+          <!-- Suggestions -->
+          <div class="card suggestions-card">
+            <div class="card-header">
+              <h4 class="card-title">
+                <span class="dot dot-blue"></span>
+                Recommendations
+              </h4>
+            </div>
+            <ol class="suggestions" id="suggestionsList"></ol>
+          </div>
+
+          <!-- Resume Preview -->
+          <details class="card preview-card">
+            <summary>
+              <span>Extracted resume text</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <pre id="resumePreview"></pre>
+          </details>
+        </div>
+
+        <!-- Error -->
+        <div class="error-banner" id="errorBanner" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="errorText"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────── FOOTER ──────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-name">ResumeLens</span>
+        <span class="footer-tag">Built with FastAPI · sentence-transformers · vanilla JS</span>
+      </div>
+      <div class="footer-meta">
+        <span>© 2026 · Muhammad Shaheer Akhtar</span>
+        <span class="footer-pill">v1.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
